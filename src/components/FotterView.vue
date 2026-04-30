@@ -29,6 +29,13 @@
           </g>
         </svg>
       </button>
+
+      <article class="poem-card" aria-labelledby="final-output-title">
+        <p id="final-output-title" class="poem-title">《The Final Output》</p>
+        <p v-for="line in poemLines" :key="line" class="poem-line">
+          {{ line }}
+        </p>
+      </article>
     </div>
 
     <div class="footer-bottom">
@@ -56,6 +63,19 @@ const footerSocials = siteConfig.socials.map((social) => ({
 }));
 
 const githubProfile = socialLinks.github;
+const poemLines = [
+  'Somewhere in the dark, a line of code flickers',
+  'Almost like a beginning.',
+  'We go on, writing ourselves into light,',
+  'As though it could hold the night at bay.',
+  'But endings do come,',
+  'And when they do, the world does not fall silent.',
+  'It breaks open.',
+  'The sky itself becomes a terminal,',
+  'And what follows is not quiet',
+  'But thunder.',
+  'A universe, no longer asleep.',
+];
 
 const openContact = () => {
   window.location.href = siteConfig.contact.primaryCta;
@@ -176,6 +196,38 @@ const openContact = () => {
 
 .touch-button:hover {
   transform: scale(1.05);
+}
+
+.poem-card {
+  width: min(100%, 760px);
+  margin-top: 2rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  backdrop-filter: blur(10px);
+  text-align: left;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.poem-title {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.poem-line {
+  margin: 0;
+  font-family: 'Google Sans Flex', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.poem-line + .poem-line {
+  margin-top: 0.15rem;
 }
 
 .footer-bottom {
