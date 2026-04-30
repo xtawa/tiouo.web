@@ -47,7 +47,7 @@
         :src="contributionChartUrl"
         alt="git-contribution-chart" />
 
-      <div class="project-container">
+      <div v-if="showGithubRepos" class="project-container">
         <a
           v-for="(project, index) in projects"
           :key="index"
@@ -151,6 +151,7 @@ const projects = [
 
 const githubProfileUrl = socialLinks.github.url;
 const contributionChartUrl = 'https://ghchart.rshah.org/409ba5/xtawa';
+const showGithubRepos = false;
 
 const titleRef = ref<HTMLElement | null>(null);
 const subtitleRef = ref<HTMLElement | null>(null);
