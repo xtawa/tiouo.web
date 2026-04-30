@@ -3,11 +3,11 @@
     <div class="footer-content">
       <div class="social-links">
         <a
-          v-for="(link, index) in socialLinks"
-          :key="link.name"
+          v-for="(link, index) in footerSocials"
+          :key="link.id"
           :href="link.url"
-          :target="link.isExternal ? '_blank' : '_self'"
-          :rel="link.isExternal ? 'noopener noreferrer' : ''"
+          :target="link.external ? '_blank' : '_self'"
+          :rel="link.external ? 'noopener noreferrer' : ''"
           class="social-item"
           :style="{ animationDelay: `${index * 0.1}s` }">
           <div class="social-item-inner">
@@ -17,7 +17,7 @@
         </a>
       </div>
 
-      <button @click="openModal('https://f.tiouo.xyz/t/qq.jpg')" class="touch-button">
+      <button @click="openContact" class="touch-button">
         Get in Touch
         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
           <g fill="none">
@@ -33,15 +33,12 @@
 
     <div class="footer-bottom">
       <h1 class="brand-text">
-        <span class="brand-name">Tiouo</span>
+        <span class="brand-name">{{ siteConfig.brand.name }}</span>
         <p class="copyright">
           (c) 2026-present
-          <a
-            style="text-decoration: underline !important"
-            target="_blank"
-            href="https://github.com/tiouoo"
-            >tiouo</a
-          >
+          <a style="text-decoration: underline !important" target="_blank" :href="githubProfile.url">
+            {{ siteConfig.brand.owner }}
+          </a>
           Crafted with passion and code.
         </p>
       </h1>
@@ -50,40 +47,22 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { socialIcons } from '@/site-icons';
+import { siteConfig, socialLinks } from '@/site-config';
 
-interface SocialLink {
-  name: string;
-  url: string;
-  icon: string;
-  isExternal: boolean;
-}
-const openModal = inject<(imageUrl: string) => void>('openModal', () => {});
+const footerSocials = siteConfig.socials.map((social) => ({
+  ...social,
+  icon: socialIcons[social.id],
+}));
 
-const socialLinks: SocialLink[] = [
-  {
-    name: 'Email',
-    url: 'mailto:tiouo@qq.com',
-    isExternal: false,
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64L12 9.548l6.545-4.91l1.528-1.145C21.69 2.28 24 3.434 24 5.457"></path></svg>',
-  },
-  {
-    name: 'GitHub',
-    url: 'https://github.com/tiouoo',
-    isExternal: true,
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>',
-  },
-  {
-    name: 'Bilibili',
-    url: 'https://space.bilibili.com/546750981',
-    isExternal: true,
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M17.813 4.653h.854q2.266.08 3.773 1.574Q23.946 7.72 24 9.987v7.36q-.054 2.266-1.56 3.773c-1.506 1.507-2.262 1.524-3.773 1.56H5.333q-2.266-.054-3.773-1.56C.053 19.614.036 18.858 0 17.347v-7.36q.054-2.267 1.56-3.76t3.773-1.574h.774l-1.174-1.12a1.23 1.23 0 0 1-.373-.906q0-.534.373-.907l.027-.027q.4-.373.92-.373t.92.373L9.653 4.44q.107.106.187.213h4.267a.8.8 0 0 1 .16-.213l2.853-2.747q.4-.373.92-.373c.347 0 .662.151.929.4s.391.551.391.907q0 .532-.373.906zM5.333 7.24q-1.12.027-1.88.773q-.76.748-.786 1.894v7.52q.026 1.146.786 1.893t1.88.773h13.334q1.12-.026 1.88-.773t.786-1.893v-7.52q-.026-1.147-.786-1.894t-1.88-.773zM8 11.107q.56 0 .933.373q.375.374.4.96v1.173q-.025.586-.4.96q-.373.375-.933.374c-.56-.001-.684-.125-.933-.374q-.375-.373-.4-.96V12.44q0-.56.386-.947q.387-.386.947-.386m8 0q.56 0 .933.373q.375.374.4.96v1.173q-.025.586-.4.96q-.373.375-.933.374c-.56-.001-.684-.125-.933-.374q-.375-.373-.4-.96V12.44q.025-.586.4-.96q.373-.373.933-.373"></path></svg>',
-  },
-];
+const githubProfile = socialLinks.github;
+
+const openContact = () => {
+  window.location.href = siteConfig.contact.primaryCta;
+};
 </script>
 
 <style scoped>
-/* 这里的变量请根据你项目的全局变量进行调整，或直接使用颜色值 */
 :root {
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.6);
@@ -107,7 +86,7 @@ const socialLinks: SocialLink[] = [
 }
 
 .footer-content {
-  max-width: 1152px; /* max-w-6xl */
+  max-width: 1152px;
   margin: 0 auto;
   padding: 0 1.5rem 2rem;
   display: flex;
@@ -132,14 +111,14 @@ const socialLinks: SocialLink[] = [
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.1); /* fallback for color-mix */
+  background-color: rgba(255, 255, 255, 0.1);
   animation: scaleIn 0.6s ease-out both;
   text-decoration: none;
 }
 
 .social-item:hover {
   transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 0.2); /* var(--text-primary) */
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .social-item-inner {
@@ -189,8 +168,8 @@ const socialLinks: SocialLink[] = [
   font-size: 0.875rem;
   transition: all 0.3s ease;
   border: none;
-  background: #fff; /* var(--text-primary) */
-  color: #000; /* var(--color-black) */
+  background: #fff;
+  color: #000;
   cursor: pointer;
   font-family: 'Google Sans Code', sans-serif;
 }
@@ -219,10 +198,10 @@ const socialLinks: SocialLink[] = [
 
 .copyright {
   margin-top: 4rem;
-  font-size: 1rem; /* font-size-md */
+  font-size: 1rem;
   letter-spacing: normal;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.6); /* var(--text-secondary) */
+  color: rgba(255, 255, 255, 0.6);
 }
 
 @keyframes scaleIn {
@@ -230,6 +209,7 @@ const socialLinks: SocialLink[] = [
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);

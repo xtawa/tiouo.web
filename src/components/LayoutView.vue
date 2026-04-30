@@ -14,32 +14,12 @@
       </svg>
     </div>
   </div>
-
-  <div :class="{ show: showModal }" class="modal-overlay" @click="closeModal">
-    <div class="modal-content" @click.stop>
-      <button class="modal-close" @click="closeModal">
-        <div style="width: 20px; height: 20px">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-            <path
-              d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z" />
-          </svg>
-        </div>
-      </button>
-      <div class="modal-image">
-        <img :src="modalImage" alt="Contact Image" />
-      </div>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, provide } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import TitleBar from './TitleBar.vue';
 import FotterView from './FotterView.vue';
-
-defineProps<{
-  scrollRatio?: number;
-}>();
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -66,7 +46,6 @@ const lerp = (start: number, end: number, t: number) => {
 const animate = () => {
   const threshold = window.innerHeight * 0.8;
   const scrollY = window.scrollY;
-
   const t = Math.min(1, Math.max(0, scrollY / threshold));
 
   up.value = lerp(0.1, 0.4, t);
@@ -85,24 +64,6 @@ const handleScroll = () => {
   }
   animate();
 };
-
-const showModal = ref(false);
-const modalImage = ref('');
-
-const openModal = (imageUrl: string) => {
-  modalImage.value = imageUrl;
-  showModal.value = true;
-};
-
-const closeModal = () => {
-  showModal.value = false;
-};
-
-provide('openModal', openModal);
-
-defineExpose({
-  openModal,
-});
 
 onMounted(() => {
   updateExposure();
@@ -124,6 +85,7 @@ onUnmounted(() => {
   position: relative;
   top: -1px;
 }
+
 .to-top {
   position: fixed;
   z-index: 100;
@@ -139,17 +101,20 @@ onUnmounted(() => {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .to-top {
   opacity: 0;
   pointer-events: none;
   transition: all 0.2s ease;
   transform: translateY(20px);
 }
+
 .to-top.show {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
+
 .up-background {
   background-color: rgb(0, 0, 0);
   background-image: radial-gradient(
@@ -188,105 +153,5 @@ onUnmounted(() => {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-}
-
-/* 弹窗样式 */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  transform: translateY(-20px);
-}
-.modal-overlay.show {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-.modal-content {
-  position: relative;
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 90vw;
-  max-height: 90vh;
-  animation: slideIn 0.5s ease;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.modal-close:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.modal-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  max-height: 80vh;
-  overflow: hidden;
-}
-
-.modal-image img {
-  max-width: 340px;
-  object-fit: contain;
-  border-radius: 8px;
-  /* animation: scaleIn 0.6s ease; */
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 </style>

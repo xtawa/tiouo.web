@@ -1,4 +1,5 @@
 import { VitePWAOptions } from 'vite-plugin-pwa';
+import { siteConfig } from './src/site-config.js';
 
 const pwaConfig = {
   registerType: 'autoUpdate',
@@ -6,25 +7,30 @@ const pwaConfig = {
     enabled: true,
     type: 'module',
   },
-  includeAssets: ['favicon.ico', 'icon-192.png', 'icon-512.png'],
+  includeAssets: ['favicon.ico', 'icon-192.png', 'icon-512.png', 'brand/avatar-underflo.jpg'],
   manifest: {
-    name: 'tiouo',
-    short_name: 'tiouo',
-    description: 'tiouo',
-    theme_color: '#ffffff',
-    background_color: '#ffffff',
+    name: siteConfig.brand.name,
+    short_name: siteConfig.brand.name,
+    description: siteConfig.seo.description,
+    theme_color: siteConfig.theme.color,
+    background_color: siteConfig.theme.backgroundColor,
     display: 'standalone',
     start_url: '/',
     scope: '/',
     icons: [
-      { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-      { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-      { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      { src: siteConfig.assets.icon192, sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: siteConfig.assets.icon512, sizes: '512x512', type: 'image/png', purpose: 'any' },
+      {
+        src: siteConfig.assets.icon512,
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
     ],
   },
   workbox: {
     navigateFallbackAllowlist: [/^\/$/],
-    globPatterns: ['**/*.{js,css,html,ico,svg,txt,xml,png}'],
+    globPatterns: ['**/*.{js,css,html,ico,svg,txt,xml,png,jpg,jpeg,webp}'],
     maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
     runtimeCaching: [
       {

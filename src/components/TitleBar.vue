@@ -9,15 +9,12 @@
             width: `${scale * 42}px`,
             height: `${scale * 42}px`,
           }"
-          src="@/assets/static/avatar.jpg"
-          alt="avatar-title" />
-        <span style="color: white; opacity: visibleOpacity">Tiouo</span>
+          :src="siteConfig.assets.avatar"
+          alt="Underflo avatar" />
+        <span style="color: white; opacity: visibleOpacity">{{ siteConfig.brand.name }}</span>
       </div>
       <div class="right">
-        <button
-          :style="{ width: `${scale * 139}px` }"
-          class="g-btn"
-          @click="openModal('https://f.tiouo.xyz/t/qq.jpg')">
+        <button :style="{ width: `${scale * 139}px` }" class="g-btn" @click="openContact">
           <span style="position: relative; top: 1px">Contact</span>
           <div class="g-btn-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
@@ -32,13 +29,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { computed } from 'vue';
+import { siteConfig } from '@/site-config';
 
 const props = defineProps<{
   scrollRatio: number;
 }>();
 
-const openModal = inject<(imageUrl: string) => void>('openModal', () => {});
+const openContact = () => {
+  window.location.href = siteConfig.contact.primaryCta;
+};
 
 const visibleOpacity = computed(() => {
   return props.scrollRatio >= 1 ? 1 : 0;
@@ -57,6 +57,7 @@ const scale = computed(() => {
   justify-content: space-between;
   margin: 0 auto;
 }
+
 .title-container {
   position: fixed;
   top: 0;
@@ -86,6 +87,7 @@ const scale = computed(() => {
   );
   transition: opacity 0.3s ease;
 }
+
 .g-btn {
   padding: 10px 20px;
   border-radius: 999px;
@@ -100,6 +102,7 @@ const scale = computed(() => {
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .g-btn-icon {
   margin-left: 10px;
   width: 18px;
@@ -107,16 +110,20 @@ const scale = computed(() => {
   fill: black;
   transition: transform 0.3s ease;
 }
+
 .g-btn:hover .g-btn-icon {
   transform: scale(1.1);
 }
+
 .avatar {
   width: 42px;
   height: 42px;
-  border-radius: 50%;
+  border-radius: 12px;
   margin-right: 12px;
+  object-fit: cover;
   transition: all 0.2s ease;
 }
+
 .left {
   display: flex;
   align-items: center;
@@ -125,6 +132,7 @@ const scale = computed(() => {
   color: #1d1d1f;
   letter-spacing: -0.5px;
 }
+
 span {
   line-height: 1;
   transition: opacity 0.3s ease;

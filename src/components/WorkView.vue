@@ -9,7 +9,7 @@
       <div class="content-body animate-up" ref="contentRef">
         I enjoy making
         <a
-          href="https://github.com/tiouoo"
+          :href="githubProfileUrl"
           target="_blank"
           rel="noopener noreferrer"
           class="link-tag"
@@ -25,7 +25,7 @@
         </a>
         <span> or just </span>
         <a
-          href="https://status.tiouo.xyz/status/default"
+          :href="siteConfig.statusPage"
           target="_blank"
           rel="noopener noreferrer"
           class="link-tag"
@@ -44,7 +44,7 @@
         style="margin-bottom: 32px"
         class="git-contribution-chart animate-up"
         ref="chartRef"
-        src="https://ghchart.rshah.org/409ba5/tiouoo"
+        :src="contributionChartUrl"
         alt="git-contribution-chart" />
 
       <div class="project-container">
@@ -98,6 +98,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+import { socialLinks, siteConfig } from '@/site-config';
 
 const avaloniaTags = [
   { name: 'Avalonia', color: '139 69 167' },
@@ -147,6 +148,9 @@ const projects = [
     ],
   },
 ].sort((a, b) => a.repo.localeCompare(b.repo));
+
+const githubProfileUrl = socialLinks.github.url;
+const contributionChartUrl = 'https://ghchart.rshah.org/409ba5/xtawa';
 
 const titleRef = ref<HTMLElement | null>(null);
 const subtitleRef = ref<HTMLElement | null>(null);
