@@ -31,6 +31,10 @@
       </button>
 
       <article class="poem-card" aria-labelledby="final-output-title">
+        <details class="poem-prefix-wrap">
+          <summary class="poem-prefix-title">To someone</summary>
+          <p class="poem-prefix">{{ poemPrefix }}</p>
+        </details>
         <p id="final-output-title" class="poem-title">《The Final Output》</p>
         <p v-for="line in poemLines" :key="line" class="poem-line">
           {{ line }}
@@ -63,6 +67,7 @@ const footerSocials = siteConfig.socials.map((social) => ({
 }));
 
 const githubProfile = socialLinks.github;
+const poemPrefix = 'G(j{rH#0UvH8eCcHaIpkH8?dmH90m$H8?dlHaIggG(t8(G(|QsHZ?XyH9<8&H8(ReHZ(ReG(t2uGcYqUHa0dnH8M6vG(t2tHaIp$H8C|YGek2)';
 const poemLines = [
   'Somewhere in the dark, a line of code flickers',
   'Almost like a beginning.',
@@ -208,6 +213,38 @@ const openContact = () => {
   backdrop-filter: blur(10px);
   text-align: left;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.poem-prefix-wrap {
+  margin: 0 0 0.9rem;
+}
+
+.poem-prefix-title {
+  cursor: pointer;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.72);
+  list-style: none;
+}
+
+.poem-prefix-title::-webkit-details-marker {
+  display: none;
+}
+
+.poem-prefix-title::before {
+  content: '▸ ';
+}
+
+.poem-prefix-wrap[open] .poem-prefix-title::before {
+  content: '▾ ';
+}
+
+.poem-prefix {
+  margin: 0 0 0.9rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.5);
+  word-break: break-all;
 }
 
 .poem-title {
