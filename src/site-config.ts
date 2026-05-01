@@ -1,4 +1,4 @@
-export type SocialId = 'email' | 'github' | 'bluesky' | 'bilibili' | 'telegram';
+export type SocialId = 'email' | 'github' | 'x' | 'bluesky' | 'bilibili' | 'telegram';
 
 export interface SiteSocial {
   id: SocialId;
@@ -92,6 +92,14 @@ export const siteConfig = {
       external: true,
       color: '#ffffff',
       size: 24,
+    },
+    {
+      id: 'x',
+      name: 'Twitter',
+      url: 'https://x.com/Re_UnderFlo',
+      external: true,
+      color: '#ffffff',
+      size: 22,
     },
     {
       id: 'bluesky',
