@@ -36,6 +36,10 @@
       </details>
 
       <article class="poem-card" aria-labelledby="final-output-title">
+        <details class="poem-prefix-wrap">
+          <summary class="poem-prefix-title">To someone</summary>
+          <p class="poem-prefix">{{ poemPrefix }}</p>
+        </details>
         <p id="final-output-title" class="poem-title">《The Final Output》</p>
         <p v-for="line in poemLines" :key="line" class="poem-line">
           {{ line }}
