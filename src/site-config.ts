@@ -95,7 +95,7 @@ export const siteConfig = {
     },
     {
       id: 'x',
-      name: 'X',
+      name: 'Twitter',
       url: 'https://x.com/Re_UnderFlo',
       external: true,
       color: '#ffffff',
