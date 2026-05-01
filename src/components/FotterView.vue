@@ -30,6 +30,11 @@
         </svg>
       </button>
 
+      <details class="poem-prefix-wrap">
+        <summary class="poem-prefix-title">To someone</summary>
+        <p class="poem-prefix">{{ poemPrefix }}</p>
+      </details>
+
       <article class="poem-card" aria-labelledby="final-output-title">
         <details class="poem-prefix-wrap">
           <summary class="poem-prefix-title">To someone</summary>
@@ -67,7 +72,7 @@ const footerSocials = siteConfig.socials.map((social) => ({
 }));
 
 const githubProfile = socialLinks.github;
-const poemPrefix = 'G(j{rH#0UvH8eCcHaIpkH8?dmH90m$H8?dlHaIggG(t8(G(|QsHZ?XyH9<8&H8(ReHZ(ReG(t2uGcYqUHa0dnH8M6vG(t2tHaIp$H8C|YGek2)';
+const poemPrefix = '2xuJHoOhJl9KPvtPNRHScoNs7S';
 const poemLines = [
   'Somewhere in the dark, a line of code flickers',
   'Almost like a beginning.',
